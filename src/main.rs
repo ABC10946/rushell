@@ -8,8 +8,12 @@ fn main() {
     io::stdout().flush().unwrap(); // for print prompt before input
     io::stdin().read_line(&mut buffer).unwrap(); // input command
 
-    println!("{}", buffer.trim_end());
-    let output = Command::new(buffer.trim_end()).output().expect("failed to execute command");
+    let commands: Vec<&str> = buffer.trim_end().split(" ").collect();
+
+    let output = Command::new(commands[0])
+        .args(&commands[1..])
+        .output()
+        .expect("failed to execute command");
     let output_str = String::from_utf8_lossy(&output.stdout);
 
     println!("{}", output_str);
