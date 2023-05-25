@@ -24,6 +24,9 @@ fn main() {
                 }
                 continue;
             }
+            "exit" => {
+                break;
+            }
             _ => (),
         }
 
