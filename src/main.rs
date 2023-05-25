@@ -27,12 +27,16 @@ fn main() {
             _ => (),
         }
 
-        let output = Command::new(commands[0])
-            .args(&commands[1..])
-            .output()
-            .expect("failed to execute command");
-        let output_str = String::from_utf8_lossy(&output.stdout);
+        let output_res = Command::new(commands[0]).args(&commands[1..]).output();
 
-        print!("{}", output_str);
+        match output_res {
+            Ok(output) => {
+                let output_str = String::from_utf8_lossy(&output.stdout);
+                print!("{}", output_str);
+            }
+            Err(_) => {
+                println!("Error command not found");
+            }
+        }
     }
 }
